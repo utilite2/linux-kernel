@@ -3072,10 +3072,22 @@ static struct at24_platform_data cm_qs600_at24_pdata = {
 	.page_size	= 16,
 };
 
+static struct at24_platform_data sb_qs600_at24_pdata = {
+	.byte_len	= 256,
+	.page_size	= 16,
+};
+
 static struct i2c_board_info cm_qs600_i2c1_binfo[] __initdata = {
 	{	/* at24 eeprom chip */
 		I2C_BOARD_INFO("24c02", 0x50),
 		.platform_data = &cm_qs600_at24_pdata,
+	},
+};
+
+static struct i2c_board_info sb_qs600_i2c3_binfo[] __initdata = {
+	{	/* at24 eeprom chip */
+		I2C_BOARD_INFO("24c02", 0x50),
+		.platform_data = &sb_qs600_at24_pdata,
 	},
 };
 
@@ -3104,6 +3116,7 @@ static struct platform_device ifc6410_pwm_backlight_device = {
 #define I2C_MPQ_HRD	BIT(6)
 #define I2C_MPQ_DTV	BIT(7)
 #define I2C_CM_QS600	BIT(8)
+#define I2C_SB_QS600	BIT(9)
 
 struct i2c_registry {
 	u32			machs;
@@ -3148,6 +3161,12 @@ static struct i2c_registry apq8064_i2c_devices[] __initdata = {
 		APQ_8064_GSBI1_QUP_I2C_BUS_ID,
 		cm_qs600_i2c1_binfo,
 		ARRAY_SIZE(cm_qs600_i2c1_binfo),
+	},
+	{
+		I2C_SB_QS600,
+		APQ_8064_GSBI3_QUP_I2C_BUS_ID,
+		sb_qs600_i2c3_binfo,
+		ARRAY_SIZE(sb_qs600_i2c3_binfo),
 	},
 };
 
@@ -3242,7 +3261,7 @@ static void __init register_i2c_devices(void)
 	if (machine_is_apq8064_cdp())
 		mach_mask = I2C_SURF;
 	else if (machine_is_cm_qs600())
-		mach_mask = I2C_CM_QS600;
+		mach_mask = I2C_CM_QS600 | I2C_SB_QS600;
 	else if (machine_is_apq8064_ifc6410())
 		mach_mask = I2C_SURF;
 	else if (machine_is_apq8064_mtp())
