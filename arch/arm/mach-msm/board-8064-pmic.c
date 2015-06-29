@@ -203,6 +203,8 @@ static struct pm8xxx_gpio_init pm8921_cm_qs600_gpios[] __initdata = {
 /* CM-QS600 rev 1.1 PM8821_MPP 2 PCIE_RESET_N */
 static struct pm8xxx_mpp_init pm8xxx_cm_qs600_mpps[] __initdata = {
 	PM8821_MPP_INIT(2, D_OUTPUT, PM8821_MPP_DIG_LEVEL_VPH, DOUT_CTRL_HIGH),
+	/* LVDS backlight - instead of PWM, always ON */
+	PM8921_MPP_INIT(9, D_OUTPUT, PM8921_MPP_DIG_LEVEL_VPH, DOUT_CTRL_HIGH),
 };
 
 /* Liquid board PM8XXX MPP configurations */
