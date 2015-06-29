@@ -3481,3 +3481,25 @@ struct platform_device cm_qs600_leds_gpio = {
 		.platform_data	= &cm_qs600_gpio_leds_info,
 	},
 };
+
+static struct gpio_led sb_qs600_gpio_leds[] = {
+	{
+		.name			= "sb_qs600:green",
+		.gpio			= 28,
+		.active_low		= 1,
+		.default_state		= LEDS_GPIO_DEFSTATE_ON,
+	},
+};
+
+static struct gpio_led_platform_data sb_qs600_gpio_leds_info = {
+	.leds		= sb_qs600_gpio_leds,
+	.num_leds	= ARRAY_SIZE(sb_qs600_gpio_leds),
+};
+
+struct platform_device sb_qs600_leds_gpio = {
+	.name	= "leds-gpio",
+	.id	= 1,
+	.dev	= {
+		.platform_data	= &sb_qs600_gpio_leds_info,
+	},
+};

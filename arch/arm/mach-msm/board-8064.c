@@ -3492,8 +3492,10 @@ static void __init apq8064_common_init(void)
 	BUG_ON(msm_pm_boot_init(&msm_pm_boot_pdata));
 	apq8064_epm_adc_init();
 
-	if (machine_is_cm_qs600())
+	if (machine_is_cm_qs600()) {
 		platform_device_register(&cm_qs600_leds_gpio);
+		platform_device_register(&sb_qs600_leds_gpio);
+	}
 }
 
 static void __init apq8064_allocate_memory_regions(void)
