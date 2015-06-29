@@ -3459,3 +3459,25 @@ struct platform_device apq8064_cache_dump_device = {
 		.platform_data = &apq8064_cache_dump_pdata,
 	},
 };
+
+static struct gpio_led cm_qs600_gpio_leds[] = {
+	{
+		.name			= "cm_qs600:green",
+		.gpio			= 87,
+		.active_low		= 0,
+		.default_trigger	= "heartbeat",
+	},
+};
+
+static struct gpio_led_platform_data cm_qs600_gpio_leds_info = {
+	.leds		= cm_qs600_gpio_leds,
+	.num_leds	= ARRAY_SIZE(cm_qs600_gpio_leds),
+};
+
+struct platform_device cm_qs600_leds_gpio = {
+	.name	= "leds-gpio",
+	.id	= 0,
+	.dev	= {
+		.platform_data	= &cm_qs600_gpio_leds_info,
+	},
+};
