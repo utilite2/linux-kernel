@@ -205,12 +205,16 @@ static struct pm8xxx_mpp_init pm8xxx_cm_qs600_mpps[] __initdata = {
 	PM8821_MPP_INIT(2, D_OUTPUT, PM8821_MPP_DIG_LEVEL_VPH, DOUT_CTRL_HIGH),
 };
 
+/* Liquid board PM8XXX MPP configurations */
+static struct pm8xxx_mpp_init pm8xxx_liquid_mpps[] __initdata = {
+	/* MPP9 is used to detect docking station connection/removal */
+	PM8921_MPP_INIT(9, D_INPUT, PM8921_MPP_DIG_LEVEL_S4, DIN_TO_INT),
+};
+
 /* Initial PM8XXX MPP configurations */
 static struct pm8xxx_mpp_init pm8xxx_mpps[] __initdata = {
 	PM8921_MPP_INIT(3, D_OUTPUT, PM8921_MPP_DIG_LEVEL_VPH, DOUT_CTRL_LOW),
 	PM8921_MPP_INIT(8, D_OUTPUT, PM8921_MPP_DIG_LEVEL_S4, DOUT_CTRL_LOW),
-	/*MPP9 is used to detect docking station connection/removal on Liquid*/
-	PM8921_MPP_INIT(9, D_INPUT, PM8921_MPP_DIG_LEVEL_S4, DIN_TO_INT),
 	/* PCIE_RESET_N */
 	PM8921_MPP_INIT(1, D_OUTPUT, PM8921_MPP_DIG_LEVEL_VPH, DOUT_CTRL_HIGH),
 };
@@ -288,6 +292,10 @@ void __init apq8064_pm8xxx_gpio_mpp_init(void)
 					ARRAY_SIZE(pm8921_mpq8064_hrd_gpios));
 
 	apq8064_configure_mpps(pm8xxx_mpps, ARRAY_SIZE(pm8xxx_mpps));
+
+	if (machine_is_apq8064_liquid())
+		apq8064_configure_mpps(pm8xxx_liquid_mpps,
+			  ARRAY_SIZE(pm8xxx_liquid_mpps));
 
 	if (machine_is_cm_qs600())
 		apq8064_configure_mpps(pm8xxx_cm_qs600_mpps,
